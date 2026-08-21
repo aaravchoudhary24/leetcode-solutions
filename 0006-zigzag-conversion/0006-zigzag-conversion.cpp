@@ -1,30 +1,27 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-        if (numRows == 1 || numRows >= s.size())
+        int n = s.size();
+
+        if (numRows == 1 || numRows >= n)
             return s;
 
-        vector<string> rows(numRows);
+        string ans;
+        ans.reserve(n);
 
-        int row = 0;
-        int direction = 1;
+        int cycle = 2 * numRows - 2;
 
-        for (char c : s) {
-            rows[row] += c;
+        for (int row = 0; row < numRows; row++) {
+            for (int j = row; j < n; j += cycle) {
+                ans += s[j];
 
-            if (row == 0)
-                direction = 1;
-            else if (row == numRows - 1)
-                direction = -1;
+                int diagonal = j + cycle - 2 * row;
 
-            row += direction;
+                if (row != 0 && row != numRows - 1 && diagonal < n)
+                    ans += s[diagonal];
+            }
         }
 
-        string result;
-
-        for (string& r : rows)
-            result += r;
-
-        return result;
+        return ans;
     }
 };
