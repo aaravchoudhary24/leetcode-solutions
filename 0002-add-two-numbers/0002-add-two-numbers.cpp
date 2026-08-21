@@ -19,6 +19,7 @@ public:
             }
 
             carry = sum / 10;
+
             cur->next = new ListNode(sum % 10);
             cur = cur->next;
         }
